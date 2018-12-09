@@ -14,7 +14,7 @@ module Buschtelefon
       Socket.udp_server_loop(@port) do |message, message_source|
         puts "Got \"#{message}\" from #{message_source}"
         handle_incoming_message(message)
-        yield(message)
+        yield(message) if block_given?
       end
     end
 
