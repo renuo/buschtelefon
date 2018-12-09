@@ -1,14 +1,14 @@
 RSpec.describe Buschtelefon::Tattler do
   let(:instance) { described_class.new }
 
-  it 'initializes' do
-    expect(instance).not_to be_nil
-    expect(instance.connections).to eq([])
+  describe '#connections' do
+    subject { instance.connections }
+    it { is_expected.to eq([]) }
   end
 
-  it 'connects to other tattlers' do
-    other_tattler = described_class.new
-    expect { instance.connect(other_tattler) }.to change { instance.connections.count }.by(1)
+  describe '#knowledge' do
+    subject { instance.knowledge }
+    it { is_expected.to eq([]) }
   end
 
   context 'when connected linearly' do

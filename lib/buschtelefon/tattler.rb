@@ -7,6 +7,10 @@ module Buschtelefon
       @brain = Brain.new
     end
 
+    def knowledge
+      @brain.to_a
+    end
+
     def connect(tattler)
       @connections << tattler unless @connections.include?(tattler)
     end
