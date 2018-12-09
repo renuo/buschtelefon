@@ -8,8 +8,7 @@ module Buschtelefon
     end
 
     def connect(tattler)
-      @connections << tattler
-      @connections.uniq!
+      @connections << tattler unless @connections.include?(tattler)
     end
 
     def feed(gossip)
