@@ -1,5 +1,7 @@
 # Buschtelefon
 
+[![Build Status](https://travis-ci.org/renuo/buschtelefon.svg?branch=master)](https://travis-ci.org/renuo/buschtelefon)
+
 With *buschtelefon* you can setup a gossiping meshnet.
 All of it should behave just like human beings tattling at a
 coffee party.
