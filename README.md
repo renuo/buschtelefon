@@ -1,8 +1,12 @@
 # Buschtelefon
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/buschtelefon`. To experiment with that code, run `bin/console` for an interactive prompt.
+With *buschtelefon* you can setup a gossiping meshnet. All of it should behave just like human beings tattling at a coffee party.
 
-TODO: Delete this and the text above, and describe your gem
+There basically are two features:
+* Nodes make coffee klatsch available between each other automatically.
+* Nodes can be asked about stale information to fight FOMO.
+
+Communication happens via UDP. Autodiscovery of nodes is not implemented (yet).
 
 ## Installation
 
@@ -22,7 +26,17 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+You can setup your tattling meshnet the following way:
+
+```ruby
+include Buschtelefon
+
+aunt_may = NetTattler.new(port: 1337)
+aunt_ruth = RemoteTattler.new(host: 'example.com', port: 1337) 
+aunt_may.connect(aunt_ruth)
+
+aunt_may.feed(Gossip.new('Renuo can do blockchain consulting!'))
+```
 
 ## Development
 
@@ -32,7 +46,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/buschtelefon.
+Bug reports and pull requests are welcome on GitHub at https://github.com/renuo/buschtelefon.
 
 ## License
 
