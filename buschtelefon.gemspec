@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['josua.schmid@renuo.ch']
 
   spec.summary       = %q{Library for meshnet gossip}
-  spec.description   = %q{Buschtelefon can be used to share information in a between Ruby clients over a network}
+  spec.description   = %q{Buschtelefon can be used to share information between Ruby clients over a network}
   spec.homepage      = 'https://github.com/schmijos/buschtelefon'
   spec.license       = 'MIT'
 
