@@ -22,5 +22,10 @@ module Buschtelefon
 
       @connections.each { |tattler| tattler.feed(gossip) }
     end
+
+    def transfer_knowledge(tattler)
+      connect(tattler)
+      knowledge.each { |gossip| tattler.feed(gossip) }
+    end
   end
 end
