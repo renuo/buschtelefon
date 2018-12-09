@@ -8,12 +8,12 @@ module Buschtelefon
       @port = port
     end
 
-    def listen(&_block)
+    def listen(&_callback)
       puts "Started UDP server on #{@port}..."
 
       Socket.udp_server_loop(@port) do |message, message_source|
-        yield(message)
         handle_incoming_message(message)
+        yield(message)
         puts "Got \"#{message}\" from #{message_source}"
       end
     end
