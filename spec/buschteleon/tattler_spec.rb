@@ -1,17 +1,17 @@
 RSpec.describe Buschtelefon::Tattler do
   let(:instance) { described_class.new }
 
-  it 'can be initialize' do
+  it 'initializes' do
     expect(instance).not_to be_nil
     expect(instance.connections).to eq([])
   end
 
-  it 'can connect to other tattlers' do
+  it 'connects to other tattlers' do
     other_tattler = described_class.new
     expect { instance.connect(other_tattler) }.to change { instance.connections.count }.by(1)
   end
 
-  context 'when connected linear' do
+  context 'when connected linearly' do
     let(:near_tattler) { described_class.new }
     let(:far_tattler) { described_class.new }
     let(:gossip) { Buschtelefon::Gossip.new('Tezos') }

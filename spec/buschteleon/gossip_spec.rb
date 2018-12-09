@@ -7,7 +7,7 @@ RSpec.describe Buschtelefon::Gossip do
     end
 
     it 'gets a timestamp on initialization' do
-      expect(instance.created_at).to be_within(0.1).of(Time.now)
+      expect(instance.created_at).to be_within(1000).of(Time.now.to_i * 1000)
     end
   end
 

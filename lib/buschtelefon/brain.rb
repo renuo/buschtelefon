@@ -25,7 +25,7 @@ module Buschtelefon
     def reorganize
       @gossip_sink.sort! { |x, y| y.created_at <=> x.created_at }
       @gossip_sink.uniq!(&:message)
-      @gossip_sink.slice!(capacity..-1)
+      @gossip_sink.slice!(capacity..-1) # only keep the newest
     end
   end
 end

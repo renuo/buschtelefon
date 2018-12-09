@@ -13,9 +13,10 @@ module Buschtelefon
     end
 
     def feed(gossip)
-      return if @brain.contains?(gossip)
+      old_gossip = @brain.contains?(gossip)
+      @brain << gossip # refresh memory
+      return if old_gossip
 
-      @brain << gossip
       @connections.each { |tattler| tattler.feed(gossip) }
     end
   end

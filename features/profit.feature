@@ -1,6 +1,6 @@
 Feature:
   As a tattler
-  I can listen to other tattlers gossip
+  I can listen to other tattlers' gossip
   So I can use and share it
 
   Background:

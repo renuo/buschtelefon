@@ -1,0 +1,49 @@
+#!/usr/bin/env ruby
+Thread.abort_on_exception = true
+
+require_relative '../lib/buschtelefon'
+
+include Buschtelefon
+
+# A
+# ↕
+# B ↔ D ↔ E
+# ↓   ↑
+# C → F
+
+tattlers = {
+  A: Tattler.new,
+  B: Tattler.new,
+  C: Tattler.new,
+  D: Tattler.new,
+  E: Tattler.new,
+  F: Tattler.new
+}
+
+tattlers[:A].connect(tattlers[:B])
+tattlers[:B].connect(tattlers[:A])
+
+tattlers[:B].connect(tattlers[:C])
+tattlers[:C].connect(tattlers[:F])
+tattlers[:F].connect(tattlers[:D])
+
+tattlers[:B].connect(tattlers[:D])
+tattlers[:D].connect(tattlers[:B])
+
+tattlers[:D].connect(tattlers[:E])
+tattlers[:E].connect(tattlers[:D])
+
+puts 'Feeding locals'
+tattlers[:A].feed(Gossip.new('Tezos'))
+
+josua = NetTattler.new(port: 9999)
+simon = NetTattler.new(port: 9998)
+remote_simon = RemoteTattler.new(host: 'localhost', port: 9998)
+
+josua.connect(remote_simon)
+
+Thread.new { josua.listen }
+Thread.new { simon.listen }
+
+remote_simon.feed(Gossip.new('Antshare'))
+puts 'gach'
