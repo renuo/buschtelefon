@@ -1,6 +1,6 @@
 # Buschtelefon
 
-[![Build Status](https://travis-ci.org/renuo/buschtelefon.svg?branch=master)](https://travis-ci.org/renuo/buschtelefon)
+[![Travis Build Status](https://travis-ci.org/renuo/buschtelefon.svg?branch=master)](https://travis-ci.org/renuo/buschtelefon)
 
 With *buschtelefon* you can setup a gossiping meshnet.
 All of it should behave just like human beings tattling at a
@@ -15,7 +15,8 @@ implemented (yet).
 
 ## Installation
 
-Add this line to your application's Gemfile:
+You can use this gem with Ruby versions starting from 2.1.
+Add the following line to your application's Gemfile:
 
 ```ruby
 gem 'buschtelefon'
