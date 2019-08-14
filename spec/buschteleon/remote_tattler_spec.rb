@@ -14,7 +14,7 @@ RSpec.describe Buschtelefon::RemoteTattler do
         end
       end
 
-      sleep(0.1)
+      sleep(0.1) # wait for udp server to start
       instance.feed(double(message: message))
       receiver.join
     end

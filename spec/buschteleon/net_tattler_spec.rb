@@ -1,23 +1,27 @@
 RSpec.describe Buschtelefon::NetTattler do
-  let(:instance) { described_class.new }
+  let(:instance) { described_class.new(port: 9999) }
 
   describe '#listen' do
-    let(:message) { 'blub' }
+    let(:gossip) { Buschtelefon::Gossip.new('blub') }
 
-    it 'receives a UDP packet' do
-      expect(instance).to receive(:feed).with(an_instance_of(Buschtelefon::Gossip))
+    around do |example|
+      receiver = Thread.new { instance.listen }
+      example.run
+      receiver.kill
+    end
 
-      receiver = Thread.new do
-        instance.listen do |raw_message|
-          expect(raw_message).to eq(message)
-          break
-        end
-      end
+    after do
+      sleep(0.1) # Waiting for packets to be sent
+    end
 
-      sleep(0.1)
+    it 'receives a UDP packet and handles it' do
+      expect(instance).to receive(:feed).with(gossip)
+      UDPSocket.new.send(gossip.message, 0, 'localhost', 9999)
+    end
 
-      UDPSocket.new.send(message, 0, 'localhost', 9999)
-      receiver.join
+    it 'handles knowledge inquiry' do
+      expect(instance).not_to receive(:feed)
+      UDPSocket.new.send("\x05", 0, 'localhost', 9999)
     end
   end
 end
