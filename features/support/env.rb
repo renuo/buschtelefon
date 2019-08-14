@@ -1,3 +1,4 @@
+require 'cucumber/rspec/doubles'
 require 'buschtelefon'
 require 'factory_bot'
 

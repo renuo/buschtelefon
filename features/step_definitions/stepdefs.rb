@@ -1,5 +1,5 @@
-Given("there's tattler {string}") do |tattler|
-  tattlers[tattler] = Tattler.new
+Given("there is a tattler {string}") do |tattler_name|
+  tattlers[tattler_name] = Tattler.new
 end
 
 Given("{string} is connected to {string}") do |tattlerA, tattlerB|
@@ -7,9 +7,13 @@ Given("{string} is connected to {string}") do |tattlerA, tattlerB|
 end
 
 When("{string} gossips about {string}") do |tattler, gossip|
-  puts "tattler #{tattlers[tattler]} talks"
+  tattlers[tattler].feed(Gossip.new(gossip))
 end
 
-Then("{string} hears {string}") do |tattler, gossip|
-  puts "tattler #{tattlers[tattler]} hears"
+Then("{string} knows about {string}") do |tattler, gossip|
+  expect(tattlers[tattler].knowledge).to include(Gossip.new(gossip))
+end
+
+Then("{string} doesn't know about {string}") do |tattler, gossip|
+  expect(tattlers[tattler].knowledge).not_to include(Gossip.new(gossip))
 end
