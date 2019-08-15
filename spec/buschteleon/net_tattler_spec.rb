@@ -25,6 +25,7 @@ RSpec.describe Buschtelefon::NetTattler do
 
     after do
       sleep(0.1) # Waiting for packets to be sent
+      sleep(1) if ENV['CI']
     end
 
     it 'receives a UDP packet and handles it' do
