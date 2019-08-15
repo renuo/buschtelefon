@@ -1,7 +1,20 @@
 RSpec.describe Buschtelefon::NetTattler do
-  let(:instance) { described_class.new(port: 9999) }
+  describe '#initialize' do
+    context 'when called without a port argument' do
+      let(:instance) { described_class.new }
+
+      before do
+        allow_any_instance_of(Kernel).to receive(:rand).and_return(4)
+      end
+
+      it 'assigns a random port' do
+        expect(instance.port).to eq(4)
+      end
+    end
+  end
 
   describe '#listen' do
+    let(:instance) { described_class.new(port: 9999) }
     let(:gossip) { Buschtelefon::Gossip.new('blub') }
 
     around do |example|

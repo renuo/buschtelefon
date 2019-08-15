@@ -3,9 +3,11 @@ require_relative 'tattler'
 
 module Buschtelefon
   class NetTattler < Tattler
-    def initialize(port: 9999)
+    attr_accessor :port
+
+    def initialize(port: nil)
       super()
-      @port = port
+      @port = port || rand(1025..65365)
     end
 
     def listen(&_callback)
