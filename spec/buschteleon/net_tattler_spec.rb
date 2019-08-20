@@ -23,19 +23,16 @@ RSpec.describe Buschtelefon::NetTattler do
       receiver.kill
     end
 
-    after do
-      sleep(0.1) # Waiting for packets to be sent
-      sleep(1) if ENV['CI']
-    end
-
     it 'receives a UDP packet and handles it' do
       expect(instance).to receive(:feed).with(gossip)
-      UDPSocket.new.send(gossip.message, 0, 'localhost', 9999)
+      UDPSocket.new.send(gossip.message, 0, 'localhost', instance.port)
+      sleep(0.1)
     end
 
     it 'handles knowledge inquiry' do
       expect(instance).not_to receive(:feed)
-      UDPSocket.new.send("\x05", 0, 'localhost', 9999)
+      UDPSocket.new.send("\x05", 0, 'localhost', instance.port)
+      sleep(0.1)
     end
   end
 end
