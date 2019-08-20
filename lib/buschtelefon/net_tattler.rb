@@ -7,7 +7,7 @@ module Buschtelefon
 
     def initialize(port: nil)
       super()
-      @port = port || rand(1025..65365)
+      @port = port || rand(1025..65365) # TODO: use port 0
     end
 
     def listen(&_callback)
