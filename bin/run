@@ -46,4 +46,3 @@ Thread.new { josua.listen }
 Thread.new { simon.listen }
 
 remote_simon.feed(Gossip.new('Antshare'))
-puts 'gach'
