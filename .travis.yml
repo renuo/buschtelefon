@@ -9,5 +9,4 @@ rvm:
   - 2.6
   - ruby-head
 cache: bundler
-before_install: gem install bundler
 script: bin/check
