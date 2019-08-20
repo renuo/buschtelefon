@@ -32,16 +32,21 @@ Or install it yourself as:
 
 ## Usage
 
-You can setup your tattling meshnet the following way:
+You can setup your local tattling meshnet the following way:
 
 ```ruby
 include Buschtelefon
 
-aunt_may = NetTattler.new(port: 1337)
-aunt_ruth = RemoteTattler.new(host: 'example.com', port: 1337) 
-aunt_may.connect(aunt_ruth)
+aunt_may = NetTattler.new
+aunt_ruth = NetTattler.new
+remote_aunt_ruth = RemoteTattler.new(host: 'localhost', port: aunt_ruth.port)
 
-aunt_may.feed(Gossip.new('Renuo can do blockchain consulting!'))
+aunt_may.connect(remote_aunt_ruth)
+
+Thread.new { aunt_may.listen }
+Thread.new { aunt_ruth.listen }
+
+aunt_may.feed(Gossip.new('Did you hear about the cool company "Renuo"?'))
 ```
 
 ## Development
