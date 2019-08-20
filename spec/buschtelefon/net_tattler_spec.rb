@@ -14,25 +14,27 @@ RSpec.describe Buschtelefon::NetTattler do
   end
 
   describe '#listen' do
-    let(:instance) { described_class.new(port: 9999) }
+    let(:instance) { described_class.new }
     let(:gossip) { Buschtelefon::Gossip.new('blub') }
-
-    around do |example|
-      receiver = Thread.new { instance.listen }
-      example.run
-      receiver.kill
-    end
 
     it 'receives a UDP packet and handles it' do
       expect(instance).to receive(:feed).with(gossip)
+
+      receiver = Thread.new { instance.listen }
+      sleep(0.1)
       UDPSocket.new.send(gossip.message, 0, 'localhost', instance.port)
       sleep(0.1)
+      receiver.kill
     end
 
     it 'handles knowledge inquiry' do
       expect(instance).not_to receive(:feed)
+
+      receiver = Thread.new { instance.listen }
+      sleep(0.1)
       UDPSocket.new.send("\x05", 0, 'localhost', instance.port)
       sleep(0.1)
+      receiver.kill
     end
   end
 end
