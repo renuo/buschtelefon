@@ -18,16 +18,17 @@ module Buschtelefon
         if message == "\x05"
           handle_knowledge_inquiry(message_source)
         else
-          handle_incoming_message(message)
-          yield(message) if block_given?
+          gossip = Gossip.new(message)
+          handle_incoming_gossip(gossip)
+          yield(gossip) if block_given?
         end
       end
     end
 
     private
 
-    def handle_incoming_message(message)
-      feed(Gossip.new(message))
+    def handle_incoming_gossip(gossip)
+      feed(gossip)
     end
 
     def handle_knowledge_inquiry(message_source)

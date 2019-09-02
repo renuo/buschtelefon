@@ -2,6 +2,7 @@
 
 ## next
 
+* `NetTattler` now yields a `Gossip` instead of a raw message string.
 * `Gossip` now uses float unix timestamps
 
 ## 0.2.0
