@@ -11,7 +11,7 @@ module Buschtelefon
 
     def feed(gossip)
       @outbound_socket.send(gossip.message, 0, @host, @port)
-      puts "Sent \"#{gossip.message}\" to #{@host}:#{@port}"
+      # puts "Sent \"#{gossip.message}\" to #{@host}:#{@port}"
     end
   end
 end

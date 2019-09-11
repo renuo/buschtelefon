@@ -14,7 +14,7 @@ module Buschtelefon
       puts "Started UDP server on #{@port}..."
 
       Socket.udp_server_loop(@port) do |message, message_source|
-        puts "Got \"#{message}\" from #{message_source}"
+        # puts "Got \"#{message}\" from #{message_source}"
         if message == "\x05"
           handle_knowledge_inquiry(message_source)
         else
