@@ -35,6 +35,7 @@ Or install it yourself as:
 You can setup your local tattling meshnet the following way:
 
 ```ruby
+require 'buschtelefon'
 include Buschtelefon
 
 aunt_may = NetTattler.new
@@ -47,6 +48,9 @@ Thread.new { aunt_may.listen }
 Thread.new { aunt_ruth.listen }
 
 aunt_may.feed(Gossip.new('Did you hear about the cool company "Renuo"?'))
+
+puts aunt_may.knowledge
+puts aunt_ruth.knowledge
 ```
 
 ## Development
