@@ -7,6 +7,10 @@ module Buschtelefon
       @brain = Brain.new
     end
 
+    def load_messages(messages)
+      messages.each { |message| @brain << Gossip.new(message) }
+    end
+
     def knowledge
       @brain.to_a
     end

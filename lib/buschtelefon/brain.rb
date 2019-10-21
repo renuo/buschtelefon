@@ -2,7 +2,7 @@ module Buschtelefon
   class Brain
     attr_reader :capacity
 
-    def initialize(capacity = 100)
+    def initialize(capacity = nil)
       @capacity = capacity
       @gossip_sink = []
     end
@@ -25,7 +25,9 @@ module Buschtelefon
     def reorganize
       @gossip_sink.sort! { |x, y| y.created_at <=> x.created_at }
       @gossip_sink.uniq!(&:message)
-      @gossip_sink.slice!(capacity..-1) # only keep the newest
+      if @capacity
+        @gossip_sink.slice!(capacity..-1) # only keep the newest
+      end
     end
   end
 end

@@ -35,9 +35,10 @@ RSpec.describe Buschtelefon::Brain do
     expect(instance.to_a).to eq([new_gossip])
   end
 
-  it 'only keeps some capacity of gossip' do
-    brain = described_class.new(100)
-    1337.times { |i| brain << Buschtelefon::Gossip.new("#{i}") }
-    expect(brain.to_a.count).to eq(100)
+  it 'only keeps some capacity of gossips' do
+    brain = described_class.new(5)
+    %w(1 2 3 4 5 6 7 8 9).each { |message| brain << Buschtelefon::Gossip.new(message) }
+    expect(brain.to_a.count).to eq(brain.capacity)
+    expect(brain.to_a.map(&:message)).to eq(%w(9 8 7 6 5))
   end
 end

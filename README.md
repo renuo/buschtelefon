@@ -40,7 +40,7 @@ include Buschtelefon
 
 aunt_may = NetTattler.new
 aunt_ruth = NetTattler.new
-remote_aunt_ruth = RemoteTattler.new(host: 'localhost', port: aunt_ruth.port)
+remote_aunt_ruth = RemoteTattler.new(host: '127.0.0.1', port: aunt_ruth.port)
 
 aunt_may.connect(remote_aunt_ruth)
 

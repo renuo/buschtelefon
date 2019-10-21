@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.4.0
+
+* `NetTattler` now sends inquired payload back to requester
+* `NetTattler` now attaches source information to gossip processor
+* `NetTattler` now listens on a system chosen port per default
+* `NetTattler` now connects to remotes via `connect_remote` and sends packets
+  to them via its outbound port (so it can receive responses)
+* We work with IPs now instead of host names
+* Default `Brain` capacity is now infinite
+* `Tattler` now can load messages directly into its brain
+
 ## 0.3.0
 
 * `NetTattler` now yields a `Gossip` instead of a raw message string.

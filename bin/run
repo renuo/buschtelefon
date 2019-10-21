@@ -36,13 +36,19 @@ tattlers[:E].connect(tattlers[:D])
 puts 'Feeding locals'
 tattlers[:A].feed(Gossip.new('Tezos'))
 
-josua = NetTattler.new
 simon = NetTattler.new
-remote_simon = RemoteTattler.new(host: 'localhost', port: simon.port)
+josua = NetTattler.new
+remote_simon = josua.connect_remote(host: '127.0.0.1', port: simon.port)
 
-josua.connect(remote_simon)
+threads = [
+  Thread.new { josua.listen { |gossip, source| puts "I'm Josua, I got \"#{gossip.message}\" from #{source}" } },
+  Thread.new { simon.listen { |gossip, source| puts "I'm Simon, I got \"#{gossip.message}\" from #{source}" } }
+]
 
-Thread.new { josua.listen }
-Thread.new { simon.listen }
-
+sleep(0.1)
 remote_simon.feed(Gossip.new('Antshare'))
+sleep(0.1)
+remote_simon.inquire
+sleep(0.1)
+
+threads.each(&:exit)

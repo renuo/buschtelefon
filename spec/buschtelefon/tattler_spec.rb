@@ -64,4 +64,10 @@ RSpec.describe Buschtelefon::Tattler do
         .to change { instance.knowledge.count }.by(other_tattler.knowledge.count)
     end
   end
+
+  describe '#load_messages' do
+    it 'loads messages into the brain' do
+      expect { instance.load_messages(%w(news lol)) }.to change { instance.knowledge.count }.by(2)
+    end
+  end
 end

@@ -1,20 +1,23 @@
 RSpec.describe Buschtelefon::NetTattler do
+  let(:instance) { described_class.new }
+
   describe '#initialize' do
     context 'when called without a port argument' do
-      let(:instance) { described_class.new }
-
-      before do
-        allow_any_instance_of(Kernel).to receive(:rand).and_return(4)
+      it 'assigns a random ports' do
+        expect(described_class.new.port).not_to eq(described_class.new.port)
       end
+    end
 
-      it 'assigns a random port' do
-        expect(instance.port).to eq(4)
+    context 'when called with a port argument' do
+      let(:instance) { described_class.new(port: 41337) }
+
+      it 'assigns a specific port' do
+        expect(instance.port).to eq(41337)
       end
     end
   end
 
   describe '#listen' do
-    let(:instance) { described_class.new }
     let(:gossip) { Buschtelefon::Gossip.new('blub') }
 
     it 'receives a UDP packet and handles it' do
@@ -26,7 +29,7 @@ RSpec.describe Buschtelefon::NetTattler do
       end
 
       sleep(0.1)
-      UDPSocket.new.send(gossip.message, 0, 'localhost', instance.port)
+      UDPSocket.new.send(gossip.message, 0, '127.0.0.1', instance.port)
       sleep(0.1)
 
       expect(yielded_gossip).to eq(gossip)
@@ -42,11 +45,61 @@ RSpec.describe Buschtelefon::NetTattler do
       end
 
       sleep(0.1)
-      UDPSocket.new.send("\x05", 0, 'localhost', instance.port)
+      UDPSocket.new.send("\x05", 0, '127.0.0.1', instance.port)
       sleep(0.1)
 
       expect(yielded_gossip).to be_nil
       receiver.kill
     end
+  end
+
+  describe '#connect_remote' do
+    subject do
+      -> { instance.connect_remote(host: '127.0.0.1', port: 0) }
+    end
+
+    context 'when remote tattler isnt connected yet' do
+      it { is_expected.to change(instance.connections, :count).from(0).to(1) }
+    end
+
+    context 'when remote tattler is already connected' do
+      before do
+        instance.connect_remote(host: '127.0.0.1', port: 0)
+      end
+
+      it { is_expected.not_to change(instance.connections, :count) }
+    end
+  end
+
+  describe '#inquire_remote_neighbors' do
+    it 'sends inquiry packets' do
+      expect(instance.socket).to receive(:send).with("\x05", 0, "127.0.0.1", 15555)
+      expect(instance.socket).to receive(:send).with("\x05", 0, "127.0.0.1", 15566)
+      instance.connect_remote(host: '127.0.0.1', port: 15555)
+      instance.connect_remote(host: '127.0.0.1', port: 15566)
+      instance.inquire_remote_neighbors
+    end
+  end
+
+  describe '#remote_connections' do
+    subject { instance.remote_connections }
+
+    context 'when not connected' do
+      it { is_expected.to be_empty }
+    end
+
+    context 'when connected to remotes' do
+      before do
+        instance.connect_remote(host: '127.0.0.1', port: 0)
+      end
+
+      it { is_expected.to have_attributes(count: 1) }
+    end
+  end
+
+  describe '#to_s' do
+    subject { instance.to_s }
+
+    it { is_expected.to eq("127.0.0.1:#{instance.port}") }
   end
 end
