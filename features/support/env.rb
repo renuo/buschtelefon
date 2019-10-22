@@ -1,6 +1,6 @@
-require 'cucumber/rspec/doubles'
-require 'buschtelefon'
-require 'factory_bot'
+require "cucumber/rspec/doubles"
+require "buschtelefon"
+require "factory_bot"
 
 module DefaultStepHelper
   def tattlers

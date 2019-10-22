@@ -2,6 +2,9 @@
 
 set -e
 
+if ruby -e "exit(1) unless Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('2.3.0')"; then
+  bundle exec standardrb --fix
+fi
+
 bundle exec rspec
 bundle exec cucumber
-

@@ -1,5 +1,5 @@
-require 'socket'
-require_relative 'tattler'
+require "socket"
+require_relative "tattler"
 
 module Buschtelefon
   class NetTattler < Tattler
@@ -8,7 +8,7 @@ module Buschtelefon
     def initialize(port: 0)
       super()
       @socket = UDPSocket.new
-      @socket.bind('127.0.0.1', port)
+      @socket.bind("127.0.0.1", port)
       @port = @socket.local_address.ip_port
     end
 
@@ -22,7 +22,7 @@ module Buschtelefon
         )
 
         if message == "\x05"
-          #puts "#{@port} got inquiry from #{remote_tattler}. Is connected to #{@connections.inspect}"
+          # puts "#{@port} got inquiry from #{remote_tattler}. Is connected to #{@connections.inspect}"
           handle_knowledge_inquiry(remote_tattler)
         else
           gossip = Gossip.new(message)
@@ -62,7 +62,7 @@ module Buschtelefon
     end
 
     def find_or_build_remote_tattler(host:, port:)
-      remote_connections.find { |t| t.host == host && t.port == port  } || build_remote_tattler(host: host, port: port)
+      remote_connections.find { |t| t.host == host && t.port == port } || build_remote_tattler(host: host, port: port)
     end
 
     def build_remote_tattler(host:, port:)
@@ -70,4 +70,3 @@ module Buschtelefon
     end
   end
 end
-

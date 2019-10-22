@@ -1,4 +1,4 @@
-require 'socket'
+require "socket"
 
 module Buschtelefon
   # No need to inheritance from Tattler because not all its features are available here (only #feed)
@@ -12,7 +12,7 @@ module Buschtelefon
     end
 
     def feed(gossip)
-      #puts "#{@outbound_socket.local_address.ip_port} sending #{JSON.parse(gossip.message)['number']} to #{@port}"
+      # puts "#{@outbound_socket.local_address.ip_port} sending #{JSON.parse(gossip.message)['number']} to #{@port}"
       @outbound_socket.send(gossip.message, 0, @host, @port)
     end
 
