@@ -2,9 +2,13 @@ RSpec.describe Buschtelefon::NetTattler do
   let(:instance) { described_class.new }
 
   describe "#initialize" do
-    context "when called without a port argument" do
+    context "when called without arguments" do
       it "assigns a random ports" do
         expect(described_class.new.port).not_to eq(described_class.new.port)
+      end
+
+      it "binds to all interfaces" do
+        expect(described_class.new.host).to eq("127.0.0.1")
       end
     end
 
@@ -13,6 +17,14 @@ RSpec.describe Buschtelefon::NetTattler do
 
       it "assigns a specific port" do
         expect(instance.port).to eq(41337)
+      end
+    end
+
+    context "when called with a host argument" do
+      let(:instance) { described_class.new(host: "0.0.0.0") }
+
+      it "binds to a specific host" do
+        expect(instance.host).to eq("0.0.0.0")
       end
     end
   end
@@ -100,6 +112,8 @@ RSpec.describe Buschtelefon::NetTattler do
   describe "#to_s" do
     subject { instance.to_s }
 
-    it { is_expected.to eq("127.0.0.1:#{instance.port}") }
+    let(:instance) { described_class.new(host: "127.0.0.1", port: 17730) }
+
+    it { is_expected.to eq("127.0.0.1:17730") }
   end
 end

@@ -14,7 +14,7 @@ Given("{string} knew about {string}") do |tattler, gossip|
 end
 
 Given("there is a network tattler {string}") do |tattler_name|
-  tattlers[tattler_name] = NetTattler.new
+  tattlers[tattler_name] = NetTattler.new(host: "127.0.0.1")
   Thread.new { tattlers[tattler_name].listen }
   sleep 0.1
 end

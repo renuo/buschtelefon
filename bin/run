@@ -36,8 +36,8 @@ tattlers[:E].connect(tattlers[:D])
 puts 'Feeding locals'
 tattlers[:A].feed(Gossip.new('Tezos'))
 
-simon = NetTattler.new
-josua = NetTattler.new
+simon = NetTattler.new(host: '127.0.0.1')
+josua = NetTattler.new(host: '127.0.0.1')
 remote_simon = josua.connect_remote(host: '127.0.0.1', port: simon.port)
 
 threads = [

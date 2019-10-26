@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.1
+
+* `NetTattler` can now be configured with a host it should bind to.
+
 ## 0.4.0
 
 * `NetTattler` now sends inquired payload back to requester

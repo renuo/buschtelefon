@@ -3,17 +3,18 @@ require_relative "tattler"
 
 module Buschtelefon
   class NetTattler < Tattler
-    attr_accessor :port, :socket
+    attr_accessor :host, :port, :socket
 
-    def initialize(port: 0)
+    def initialize(host: "127.0.0.1", port: 0)
       super()
       @socket = UDPSocket.new
-      @socket.bind("127.0.0.1", port)
+      @socket.bind(host, port)
+      @host = @socket.local_address.ip_address
       @port = @socket.local_address.ip_port
     end
 
     def listen(&_callback)
-      puts "Started UDP server on #{@port}..."
+      puts "Started UDP server on #{@host}:#{@port}..."
 
       Socket.udp_server_loop_on([@socket]) do |message, message_source|
         remote_tattler = find_or_build_remote_tattler(
@@ -47,7 +48,7 @@ module Buschtelefon
     end
 
     def to_s
-      "127.0.0.1:#{@port}"
+      "#{@host}:#{@port}"
     end
 
     private

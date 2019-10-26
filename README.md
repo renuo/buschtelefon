@@ -38,8 +38,8 @@ You can setup your local tattling meshnet the following way:
 require 'buschtelefon'
 include Buschtelefon
 
-aunt_may = NetTattler.new
-aunt_ruth = NetTattler.new
+aunt_may = NetTattler.new(host: '127.0.0.1')
+aunt_ruth = NetTattler.new(host: '127.0.0.1')
 remote_aunt_ruth = RemoteTattler.new(host: '127.0.0.1', port: aunt_ruth.port)
 
 aunt_may.connect(remote_aunt_ruth)
@@ -52,6 +52,9 @@ aunt_may.feed(Gossip.new('Did you hear about the cool company "Renuo"?'))
 puts aunt_may.knowledge
 puts aunt_ruth.knowledge
 ```
+
+**Comfortability hint:** Be aware that `NetTattler` binds itself to `127.0.0.1` per default.
+Use `NetTattler.new(host: '0.0.0.0')` to bind it on all interfaces.
 
 ## Development
 
