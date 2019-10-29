@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.email = ["josua.schmid@renuo.ch"]
 
   spec.summary = "Library for meshnet gossip"
-  spec.description = "Buschtelefon can be used to share information between Ruby clients over a network"
-  spec.homepage = "https://github.com/schmijos/buschtelefon"
+  spec.description = "Buschtelefon can be used to automatically share information between Ruby clients over a network"
+  spec.homepage = "https://github.com/renuo/buschtelefon"
   spec.license = "MIT"
 
   spec.files = `git ls-files -z`.split("\x0").reject do |f|
