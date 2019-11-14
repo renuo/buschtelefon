@@ -12,6 +12,11 @@ module Buschtelefon
       reorganize
     end
 
+    def load_batch(gossips)
+      @gossip_sink += gossips
+      reorganize
+    end
+
     def contains?(gossip)
       @gossip_sink.include?(gossip)
     end

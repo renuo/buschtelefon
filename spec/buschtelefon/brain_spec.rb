@@ -41,4 +41,25 @@ RSpec.describe Buschtelefon::Brain do
     expect(brain.to_a.size).to eq(brain.capacity)
     expect(brain.to_a.map(&:message)).to eq(%w[9 8 7 6 5])
   end
+
+  describe "#load_batch" do
+    let(:old_gossip) { instance_double(Buschtelefon::Gossip, message: "Gach", created_at: Time.new(1990)) }
+    let(:new_gossip) { instance_double(Buschtelefon::Gossip, message: "Blub", created_at: Time.new(2000)) }
+
+    it "adds gossips in batches" do
+      instance.load_batch([old_gossip, new_gossip])
+      expect(instance.to_a).to contain_exactly(old_gossip, new_gossip)
+    end
+
+    it "adds gossips in batches and reorganizes" do
+      instance.load_batch([new_gossip, old_gossip])
+      expect(instance.to_a).to contain_exactly(old_gossip, new_gossip)
+    end
+
+    it "adds gossips in batches and keeps old gossips" do
+      instance << old_gossip
+      instance.load_batch([new_gossip])
+      expect(instance.to_a).to contain_exactly(old_gossip, new_gossip)
+    end
+  end
 end

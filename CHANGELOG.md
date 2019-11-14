@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.0
+
+* `Brain` now can batch load gossips to circumvent expensive reorganizations
+
+## 0.4.2
+
+* Fix gemspec link to Github
+
 ## 0.4.1
 
 * `NetTattler` can now be configured with a host it should bind to.
